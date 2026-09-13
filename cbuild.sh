@@ -42,8 +42,6 @@ run_with_timing()
     return "$exit_code"
 }
 
-export -f get_runtime
-
 export config_file="./.cbuild_config"
 
 if [[ -f "$config_file" ]]; then

@@ -8,19 +8,20 @@ clean_command=$(find "./" -type f -iname "clean.sh")
 
 build_command=$(find "./" -type f -iname "build.sh")
 
-if [[ -f $clean_command ]]; then
+
+if [[ -z "$clean_command" ]]; then
   echo "Arquivo 'clean.sh' Não Encontrado Para a Execução do Comando 'Clean'" >> "$out_text"
   echo "Falha em encontrar o arquivo executável clean.sh"
   exit 1
 fi
 
-if [[ -f $build_command ]]; then
+if [[ -z "$build_command" ]]; then
   echo "Arquivo 'build.sh' Não Encontrado Para a Execução do Comando 'Build'" >> "$out_text"
   echo "Falha em encontrar o arquivo executável build.sh"
   exit 1
 fi
 
-./$clean_command all || {
+./"$clean_command" "all" || {
   {
   echo "" 
   echo "Comando Clean Falhou Em Sua Execução"
@@ -29,11 +30,11 @@ fi
   exit 1 
   }
 
-./$build_command "$1" "$2" || {
+./"$build_command" "$1" "$2" || {
   {
   echo "" 
   echo "Comando Build Falhou Em Sua Execução"
   echo ""
-  } >> "$out_text" 
+  } >> "$out_text"
   exit 1 
   }

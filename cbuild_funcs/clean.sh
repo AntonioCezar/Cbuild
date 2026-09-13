@@ -8,23 +8,41 @@
 #cria arquivo temp de erro
 out_text=$(mktemp -p "$command_log_dir" 01_clean.XXXXXX)
 
+build_dir="./build"
+logs_dir="./logs"
+
 clean() {
-    #verifica se o diretório build existe e não está vazio
-    if [[ -d "./build" && -n "$(find "./build" -mindepth 1 -print -quit)" ]]; then 
+
+    #verifico se o diretório build existe
+    if [[ ! -d "$build_dir" ]]; then
+        echo "Diretório '$build_dir'  Não Existe." >> "$out_text"
+        echo "Diretório '$build_dir' não existe."
+        return 1
+    fi
+
+    #verifico se tenho permissões para acessar o diretório build
+    if [[ ! -r "$build_dir" || ! -x "$build_dir" ]]; then
+        echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$build_dir'." >> "$out_text"
+        echo "Erro: permissão negada ao acessar '$build_dir'"
+        return 1
+    fi
+
+    #verifica se o diretório build não está vazio
+    if [[ -n "$(find "$build_dir" -mindepth 1 -print -quit)" ]]; then 
 
         #apaga os arquivos de build, se houver erro, manda para o $out_text
-        if find "./build" -mindepth 1 -delete 2>> "$out_text"; then
-            echo "Os Arquivos Da Pasta './build' Foram Apagados Com Sucesso" >> $out_text
+        if find "$build_dir" -mindepth 1 -delete 2>> "$out_text"; then
+            echo "Os Arquivos Da Pasta '$build_dir' Foram Apagados Com Sucesso" >> $out_text
             echo "Os arquivos build foram apagados com sucesso"
             return 0
         else
-            echo "Não foi possível apagar os arquivos de build. Acesse o log para mais informações"
+            echo "Não foi possível apagar os arquivos de '$build_dir'. Acesse o log para mais informações." 
             return 1
         fi
 
     else 
-        echo "Não Há Nenhum Arquivo Na Pasta './build' Para Apagar!" >> $out_text
-        echo "Não há arquivos build para apagar"
+        echo "Não Há Nenhum Arquivo Na Pasta '$build_dir' Para Apagar!" >> $out_text
+        echo "Não há arquivos na pasta '$build_dir' para apagar"
         return 0
     fi
 }
@@ -33,24 +51,50 @@ cleanAll() {
     #apaga os arquivos de build
     clean
 
-    #verifica se o diretório logs existe e não está vazio
-    if [[ -d "./logs" && -n "$(find "./logs" -mindepth 1 -print -quit)" ]]; then
+    exit_code=$?
 
-        #apaga os logs, se houver erro, manda para o $out_text
-        if find "./logs" -mindepth 1 -delete 2> "$out_text"; then
-            echo "Os Arquivos Da Pasta './logs' Foram Apagados Com Sucesso" >> $out_text
-            echo "Os logs foram apagados com sucesso"
-            return 0
-        else
-            echo "Não foi possível apagar os arquivos de build."
+    #só apaga os logs se foi possível apagar os arguivos de build
+    if [[ $exit_code -eq 0 ]]; then
+
+        #verifico se o diretório logs existe
+        if [[ ! -d "$logs_dir" ]]; then
+            echo "Diretório '$logs_dir'  Não Existe." >> "$out_text"
+            echo "Diretório '$logs_dir' não existe."
             return 1
         fi
 
+        #verifico se tenho permissões para acessar o diretório logs
+        if [[ ! -r "$logs_dir" || ! -x "$logs_dir" ]]; then
+            echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$logs_dir'." >> "$out_text"
+            echo "Erro: permissão negada ao acessar '$logs_dir'"
+            return 1
+        fi
+
+        #verifica se o diretório não está vazio
+        if [[ -n "$(find "$logs_dir" -mindepth 1 -print -quit)" ]]; then
+
+            #apaga os logs, se houver erro, manda para o $out_text
+            if find "$logs_dir" -mindepth 1 -delete 2>> "$out_text"; then
+                echo "Os Arquivos Da Pasta '$logs_dir' Foram Apagados Com Sucesso" >> $out_text
+                echo "Os logs foram apagados com sucesso"
+                return 0
+            else
+                echo "Não foi possível apagar os arquivos de '$logs_dir'. Acesse o log para mais informações."
+                return 1
+            fi
+
+        else 
+            echo "Não Há Nenhum Arquivo Na Pasta '$logs_dir' Para Apagar!" >> $out_text
+            echo "Não há arquivos na pasta '$logs_dir' para apagar"
+            return 0
+        fi
+    
     else 
-        echo "Não Há Nenhum Arquivo Na Pasta './logs' Para Apagar!" >> $out_text
-        echo "Não há logs para apagar"
-        return 0
+        echo "Falha Ao Limpar '$build_dir'. Os Logs Foram Preservados" >> $out_text
+        echo "Falha ao limpar '$build_dir'. Os logs foram preservados"
+        return 1
     fi
+
 }
 
 #deixa o parâmetro em caixa baixa
