@@ -4,12 +4,23 @@
 
 out_text=$(mktemp -p "$command_log_dir" 03_run.XXXXXX)
 
-build_dir=$(find "./" -type d -name "build")
+if [[ $verbose_mode == true ]]; then 
+    echo "Programa inicou a execução do comando run"
+    echo ""
+    echo "======== Run em Andamento ========"
+    echo ""
+fi
 
-if [[ -z $build_dir ]]; then
+build_dir="./build"
+
+if [[ ! -d $build_dir ]]; then
   echo "Nenhum Arquivo Presente Na Pasta './build'!" >> $out_text
-  echo "A pasta './build' está vazia! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa"
+  echo "A pasta './build' está vazia! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa".
   exit 1
+fi
+
+if [[ $debug_mode == true ]]; then 
+  echo "Debug: Programa verificou se o diretório '$build_dir' está vazio." 
 fi
 
 #Guarda o caminho do executável mais recente
@@ -23,6 +34,11 @@ if [[ -z "$run_file" ]]; then
   likely_file=$(find "$build_dir" -maxdepth 1 -type f -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
 
   if [[ -n "$likely_file" ]]; then
+
+    if [[ $debug_mode == true ]]; then 
+      echo "Debug: Programa concluiu que há um arquivo recente em $build_dir, mas ele não é um executável válido." 
+    fi
+
     echo "Erro Ao Executar '$likely_file' (Falta De Permissão Ou Formato Inválido) '$run_file'" >> "$out_text"
     echo "Erro ao executar '$likely_file' (Falta de permissão ou formato inválido)"
     exit 1
@@ -35,22 +51,42 @@ if [[ -z "$run_file" ]]; then
 
 fi
 
+if [[ $verbose_mode == true ]]; then 
+  echo "Programa armazenou o caminho do executável na variável '$run_file'."
+fi
+
+if [[ $debug_mode == true ]]; then 
+  echo "Debug: Programa concluiu que existe um arquivo executável válido." 
+fi
+
 #Executa o arquivo, se houver erro, manda para o $out_text
 ./"$run_file" 2>> "$out_text"
 exit_code=$?
 
+if [[ $verbose_mode == true ]]; then 
+  echo "Programa executou o arquivo '$run_file'."
+fi
+
 if [[ $exit_code -eq 0 ]]; then
   echo "Programa Executado Com Sucesso!" >> $out_text
   echo "Execução bem-sucedida."
+
+  if [[ $verbose_mode == true ]]; then 
+    echo "Programa terminou a execução de $run_file"
+    echo ""
+    echo "======== Run Finalizado ========="
+    echo ""
+  fi
+
   exit 0
 
 elif [[ $exit_code -gt 128 ]]; then
   sinal=$((exit_code - 128))
   echo "Programa Encerrado Pelo Sinal $sinal ($(kill -l $sinal))" >> "$out_text"
-  echo "Erro em tempo de execução! Acesse o log para mais informações"
+  echo "Erro em tempo de execução! Acesse o log para mais informações."
   exit 1
 
 else
-  echo "Erro ao executar '$run_file'! Acesse o log para mais informações"
+  echo "Erro ao executar '$run_file'! Acesse o log para mais informações."
   exit 1
 fi

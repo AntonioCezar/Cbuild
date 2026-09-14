@@ -4,10 +4,16 @@
 
 out_text=$(mktemp -p "$command_log_dir" 05_rebuild.XXXXXX)
 
-clean_command=$(find "./" -type f -iname "clean.sh")
+if [[ $verbose_mode == true ]]; then 
+  echo "Programa inicou a execução de rebuild"
+  echo ""
+  echo "======== Rebuild em Andamento ========"
+  echo ""
+fi
 
-build_command=$(find "./" -type f -iname "build.sh")
+clean_command=$(find "./" -type f -iname "clean.sh" 2>/dev/null)
 
+build_command=$(find "./" -type f -iname "build.sh" 2>/dev/null)
 
 if [[ -z "$clean_command" ]]; then
   echo "Arquivo 'clean.sh' Não Encontrado Para a Execução do Comando 'Clean'" >> "$out_text"
@@ -19,6 +25,10 @@ if [[ -z "$build_command" ]]; then
   echo "Arquivo 'build.sh' Não Encontrado Para a Execução do Comando 'Build'" >> "$out_text"
   echo "Falha em encontrar o arquivo executável build.sh"
   exit 1
+fi
+
+if [[ $debug_mode == true ]]; then 
+  echo "Debug: Programa verificou se os scripts clean.sh e build.sh existem." 
 fi
 
 ./"$clean_command" "all" || {
@@ -38,3 +48,10 @@ fi
   } >> "$out_text"
   exit 1 
   }
+
+if [[ $verbose_mode == true ]]; then 
+    echo "Programa terminou a execução de Rebuild"
+    echo ""
+    echo "======== Rebuild Finalizado ========="
+    echo ""
+fi

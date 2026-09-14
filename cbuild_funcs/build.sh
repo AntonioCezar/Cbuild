@@ -95,7 +95,7 @@ if [[ ! -d $program_folder ]]; then # checagem para ver se o dir passado pelo us
 fi
 
 if [[ $debug_mode == true ]]; then 
-    echo "Debug: Programa testou se o diretório existe."
+    echo "Debug: Programa testou se o diretório "$program_folder" existe."
 fi
 
 if [[ -z $out_name ]]; then # checagem para ver se o user passou o nome do executável

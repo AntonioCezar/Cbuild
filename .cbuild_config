@@ -1,2 +1,2 @@
-export verbose_mode=false
-export debug_mode=true
+export verbose_mode=true
+export debug_mode=false
