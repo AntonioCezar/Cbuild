@@ -1,7 +1,7 @@
 
 =============================================================
 Data de criação deste log: 13-09-2026
-Hora de criação deste log: 16:40:50
+Hora de criação deste log: 21:57:08
 =============================================================
 
 *************************************************************
@@ -10,14 +10,14 @@ Comando executado: 'Clean'
 
 Resultado da Operação: 'Operação Bem-Sucedida'
 
-Comando Digitado pelo Usuário: './cbuild.sh clean all'
+Comando Digitado pelo Usuário: './cbuild.sh c all'
 
-Tempo de Execução do Comando Clean: '0s019ms'
+Tempo de Execução do Comando Clean: '0s018ms'
 
 *************************************************************
 
 Retorno do Comando Clean:
 
-Os Arquivos Da Pasta './build' Foram Apagados Com Sucesso
+Não Há Nenhum Arquivo Na Pasta './build' Para Apagar!
 Os Arquivos Da Pasta './logs' Foram Apagados Com Sucesso
 
