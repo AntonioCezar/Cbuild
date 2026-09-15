@@ -6,6 +6,16 @@ mkdir -p ./logs
 
 logdir=./logs
 
+if [[ ! -r "$logdir" || ! -x "$logdir" || ! -w "$logdir" ]]; then # checa se tem permissão para o caso da pasta já existir anteriormente
+  echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$logdir'." >> "$out_text"
+  echo "Erro: permissão negada ao acessar '$logdir'."
+  return 1
+fi
+
+if [[ $debug_mode == true ]]; then 
+    echo "Debug: Programa checou se tem permissões para acessar a pasta '$logdir'"
+fi
+
 data_atual=$(date '+%d-%m-%Y')
 hora_atual=$(date '+%H-%M-%S')
 hora_atual_format=$(date '+%H:%M:%S')
@@ -33,7 +43,7 @@ if [[ $debug_mode == true ]]; then
 fi
 
 if [[ $verbose_mode == true ]]; then 
-    echo "Programa criou o arquivo .log e começou a preenchê-lo"
+    echo "Verboso: Programa criou o arquivo .log e começou a preenchê-lo"
 fi
 
 {
@@ -74,5 +84,5 @@ if [[ $debug_mode == true ]]; then
 fi
 
 if [[ $verbose_mode == true ]]; then 
-    echo "Programa preencheu todas as informações necessárias para o arquivo .log"
+    echo "Verboso: Programa preencheu todas as informações necessárias para o arquivo .log"
 fi

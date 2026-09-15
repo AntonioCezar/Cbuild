@@ -13,14 +13,25 @@ fi
 
 build_dir="./build"
 
-if [[ ! -d $build_dir ]]; then
-  echo "Nenhum Arquivo Presente Na Pasta './build'!" >> $out_text
-  echo "A pasta './build' está vazia! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa".
+if [[ ! -d "$build_dir" ]]; then
+  echo "A Pasta './build' Não Existe, O Programa Não Foi Compilado Anteriormente E Não Contém Executável." >> "$out_text"
+  echo "A pasta './build' não existe! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa"
   exit 1
 fi
 
 if [[ $debug_mode == true ]]; then 
   echo "Debug: Programa verificou se o diretório '$build_dir' está vazio." 
+fi
+
+#verifico se não tenho permissões para acessar o diretório build
+if [[ ! -r "$build_dir" || ! -x "$build_dir" || ! -w "$build_dir" ]]; then
+  echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$build_dir'." >> "$out_text"
+  echo "Erro: permissão negada ao acessar '$build_dir'."
+  return 1
+fi
+
+if [[ $debug_mode == true ]]; then 
+  echo "Debug: Programa verificou se existe permissão para acessar '$build_dir'." 
 fi
 
 #Guarda o caminho do executável mais recente

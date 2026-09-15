@@ -5,7 +5,7 @@
 out_text=$(mktemp -p "$command_log_dir" 05_rebuild.XXXXXX)
 
 if [[ $verbose_mode == true ]]; then 
-  echo "Programa inicou a execução de rebuild"
+  echo "Verboso: Programa inicou a execução de rebuild"
   echo ""
   echo "======== Rebuild em Andamento ========"
   echo ""
@@ -50,7 +50,7 @@ fi
   }
 
 if [[ $verbose_mode == true ]]; then 
-    echo "Programa terminou a execução de Rebuild"
+    echo "Verboso: Programa terminou a execução de Rebuild"
     echo ""
     echo "======== Rebuild Finalizado ========="
     echo ""

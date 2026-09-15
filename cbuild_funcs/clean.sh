@@ -16,14 +16,14 @@ logs_dir="./logs"
 clean() {
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Programa inicou a limpeza dos arquivos temporários"
+        echo "Verboso: Programa inicou a limpeza dos arquivos temporários"
         echo ""
         echo "======== Limpeza em Andamento ========"
         echo ""
     fi
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Programa iniciou a limpeza em'$build_dir'."
+        echo "Verboso: Programa iniciou a limpeza em'$build_dir'."
     fi
 
     #verifico se o diretório build existe
@@ -38,7 +38,7 @@ clean() {
     fi
 
     #verifico se não tenho permissões para acessar o diretório build
-    if [[ ! -r "$build_dir" || ! -x "$build_dir" ]]; then
+    if [[ ! -r "$build_dir" || ! -x "$build_dir" || ! -w "$build_dir" ]]; then
         echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$build_dir'." >> "$out_text"
         echo "Erro: permissão negada ao acessar '$build_dir'."
         return 1
@@ -61,7 +61,7 @@ clean() {
         if [[ -z "$(find "$build_dir" -mindepth 1 -print -quit)" ]]; then 
 
             if [[ $verbose_mode == true ]]; then 
-                echo "Programa apagou os arquivos da pasta '$build_dir'."
+                echo "Verboso: Programa apagou os arquivos da pasta '$build_dir'."
             fi
 
             echo "Os Arquivos Da Pasta '$build_dir' Foram Apagados Com Sucesso." >> $out_text
@@ -91,7 +91,7 @@ cleanAll() {
     exit_code=$?
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Programa iniciou a limpeza em'$logs_dir'."
+        echo "Verboso: Programa iniciou a limpeza em'$logs_dir'."
     fi
 
     #só apaga os logs se foi possível apagar os arguivos de build
@@ -134,7 +134,7 @@ cleanAll() {
             find "$logs_dir" -mindepth 1 -delete 2>> "$out_text"
 
             if [[ $verbose_mode == true ]]; then 
-                echo "Programa apagou os logs da pasta '$logs_dir'."
+                echo "Verboso: Programa apagou os logs da pasta '$logs_dir'."
             fi
 
             #verifica se a pasta logs ficou vazia mesmo
@@ -179,7 +179,7 @@ case "$clean_mode" in
 esac
 
 if [[ $verbose_mode == true ]]; then 
-    echo "Programa terminou a limpeza dos arquivos temporários"
+    echo "Verboso: Programa terminou a limpeza dos arquivos temporários"
     echo ""
     echo "======== Limpeza Finalizada ========="
     echo ""

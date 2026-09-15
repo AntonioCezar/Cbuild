@@ -2,9 +2,7 @@
 
 # aqui jaz a função build completa
 
-# e se tiver mais de uma pasta com arquivos de mesmo nome?
-
-# --- Error handling e logs ---
+# --- logs ---
 
 out_text=$(mktemp -p "$command_log_dir" 02_build.XXXXXX) # reserva espaço para uma variavel temporaria de erro dentro do diretório command_log_dir com o nome build e um padrão alfanumérico aleatório 
 
@@ -19,7 +17,7 @@ deep_compiler() {
     mkdir -p ./build/build_parts
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Programa começou a compilar os arquivos"
+        echo "Verboso: Programa começou a compilar os arquivos"
         echo ""
         echo "======== Compilação em Andamento ========"
         echo ""
@@ -43,7 +41,7 @@ deep_compiler() {
             arq_mod=$((arq_mod + 1))
 
             if [[ $verbose_mode == true ]]; then 
-                echo "Programa compilou $file com o comando 'gcc -c $file -o ./build/build_parts/${formated_file}.o'"
+                echo "Verboso: Programa compilou $file com o comando 'gcc -c $file -o ./build/build_parts/${formated_file}.o'"
             fi
         else
             if [[ $debug_mode == true ]]; then 
@@ -71,11 +69,11 @@ deep_compiler() {
     gcc $out_files -o "./build/$out_name" 2>> "$out_text" || return 2 # compila todos em um só output com o nome escolhido pelo usuário, se der erro retorna 2
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Programa compilou $file com o comando 'gcc $out_files -o ./build/$out_name'"
+        echo "Verboso: Programa compilou $file com o comando 'gcc $out_files -o ./build/$out_name'"
     fi
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Programa terminou de compilar os arquivos .c"
+        echo "Verboso: Programa terminou de compilar os arquivos .c"
         echo ""
         echo "======== Compilação Finalizada ========="
         echo ""
@@ -83,19 +81,39 @@ deep_compiler() {
 
 }
 
-# --- checando se o user passou as infos corretas para o funcionamento do cbuild ---
+# --- checando se o user passou as infos corretas para o funcionamento do cbuild (e se tem tudo que precisa) ---
 
 program_folder="$1"; # aqui vai o diretório que o user vai passar ./cbuild b <dir>
 out_name="$2" # vai ser o nome que o user passar para o comando ./cbuild b <dir> <nome>
 
+if ! command -v gcc >/dev/null 2>&1 ; then # checa se o gcc está instalado na root do sistema (se estiver não retorna nada, para isso que serve o dev/null)
+    echo "GCC (GNU Compiler Collection) Não Instalado! Instale O Compilador Para Utilizar o Comando Build" >> "$out_text"
+    echo "Erro na execução do comando build - gcc não instalado!"
+    exit 1
+fi
+
+if [[ $debug_mode == true ]]; then 
+    echo "Debug: Programa testou se o usuário tem o gcc instalado."
+fi
+
 if [[ ! -d $program_folder ]]; then # checagem para ver se o dir passado pelo usuario existe
-    echo "Diretório '$program_folder' Não Encontrado!" >> $out_text
-    echo "Erro na execução do comando build - Diretório '$program_folder' não encontrado!"
+    echo "Diretório '$program_folder' Que Foi Indicado Pelo Usuário Não Existe!" >> $out_text
+    echo "Erro na execução do comando build - Diretório '$program_folder' não existe!"
     exit 1
 fi
 
 if [[ $debug_mode == true ]]; then 
     echo "Debug: Programa testou se o diretório "$program_folder" existe."
+fi
+
+if [[ ! -r "$program_folder" || ! -x "$program_folder" || ! -w "$program_folder" ]]; then # verifica se tem permissão para pasta passada
+    echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$program_folder'." >> "$out_text"
+    echo "Erro: permissão negada ao acessar '$program_folder'."
+    exit 1
+fi
+
+if [[ $debug_mode == true ]]; then 
+    echo "Debug: Programa testou se tem permissão para acessar "$program_folder"."
 fi
 
 if [[ -z $out_name ]]; then # checagem para ver se o user passou o nome do executável
@@ -119,6 +137,8 @@ if find "$program_folder" -type f -iname "*.c" | deep_compiler; then # procura t
     exit 0
 else
 
+# ---- Error Handling da Função Deep Compiler ----
+
     func_status="$?" # guarda o erro da função (se houver)
 
     if [[ "$func_status" -eq 2 ]]; then # erro na compilação do gcc
@@ -131,7 +151,7 @@ else
         exit 1
 
     elif [[ "$func_status" -eq 4 ]]; then # checagem para ver se encontrou algum arquivo .c
-        echo "Nenhum Arquivo .c Encontrado!" >> $out_text
+        echo "Ausência de Arquivos Fonte Para A Compilação Do Programa .c Na Pasta '$program_folder'" >> $out_text
         echo "Erro na execução do comando build - Nenhum arquivo .c encontrado!"
         exit 1
 
