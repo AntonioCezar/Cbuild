@@ -13,6 +13,9 @@ if [[ ! -r "$logdir" || ! -x "$logdir" || ! -w "$logdir" ]]; then # checa se tem
 fi
 
 if [[ $debug_mode == true ]]; then 
+    echo ""
+    echo "=========== Debug Logs ==========="
+    echo ""
     echo "Debug: Programa checou se tem permissões para acessar a pasta '$logdir'"
 fi
 
@@ -81,6 +84,8 @@ echo ""
 
 if [[ $debug_mode == true ]]; then 
     echo "Debug: Programa terminou de preencher as informações adicionais com o comando cat que recebe o arquivo 'out_text'."
+    echo ""
+    echo "=================================="
 fi
 
 if [[ $verbose_mode == true ]]; then 

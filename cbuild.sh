@@ -50,7 +50,9 @@ else
     {
     echo "export verbose_mode=false"
     echo "export debug_mode=false"
+    echo 'export default_name="main"'
     } > "$config_file"
+    source "$config_file"
 fi
 
 export command_log_dir=$(mktemp -d) # cria uma pasta temporaria global para o resultado das execuções dos comandos

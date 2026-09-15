@@ -15,6 +15,7 @@ case "$parametro" in
         {
         echo "export verbose_mode=false"
         echo "export debug_mode=$debug_mode"
+        echo "export default_name=$default_name"
         } > "$config_file"
         exit 0
         ;;
@@ -42,6 +43,7 @@ if [[ $debug_mode == "true" && $ativou == "true" ]]; then
                 {
                 echo "export verbose_mode=true"
                 echo "export debug_mode=false"
+                echo "export default_name=$default_name"
                 } > "$config_file"
                 ;;
             "n" | "N" | "no" | "No" | "não" | "Não" | "nao" | "Nao" )
@@ -65,6 +67,7 @@ elif [[ $ativou = "true" ]]; then
     {
     echo "export verbose_mode=true"
     echo "export debug_mode=$debug_mode"
+    echo "export default_name=$default_name"
     } > "$config_file"
     echo "Modo verboso ativado com sucesso!"
     exit 0

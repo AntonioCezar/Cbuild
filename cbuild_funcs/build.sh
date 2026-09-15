@@ -117,9 +117,7 @@ if [[ $debug_mode == true ]]; then
 fi
 
 if [[ -z $out_name ]]; then # checagem para ver se o user passou o nome do executável
-    echo "Nome Do Executável Não Especificado!" >> $out_text
-    echo "Erro na execução do comando build - Nome do executável não especificado!"
-    exit 1
+    out_name="$default_name"
 
 elif [[ "$out_name" == *.* ]]; then # checagem para ver se nome que o user passou é válido
     echo "Nome Do Executável Não Pode Conter '.'" >> $out_text
