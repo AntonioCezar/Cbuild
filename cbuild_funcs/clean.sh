@@ -108,10 +108,12 @@ case "$clean_mode" in
     "all" )
         #limpa build e logs
         cleanAll
+        exit $? #propaga a saída do return
         ;;
     "" )
         #limpa build
         clean "$build_dir"
+        exit $? #propaga a saída do return
         ;;
     *)
         echo "O parâmetro -$clean_mode- não existe."
