@@ -96,6 +96,12 @@ if [[ $debug_mode == true ]]; then
     echo "Debug: Programa testou se o usuário tem o gcc instalado."
 fi
 
+if [[ -z "$program_folder" ]]; then
+    echo "Diretório '$program_folder' Que Foi Indicado Pelo Usuário Não Existe! (Argumento Vazio)" >> $out_text
+    echo "Erro na execução do comando build - Forneça o diretório do seu programa como argumento!"
+    exit 1
+fi
+
 if [[ ! -d $program_folder ]]; then # checagem para ver se o dir passado pelo usuario existe
     echo "Diretório '$program_folder' Que Foi Indicado Pelo Usuário Não Existe!" >> $out_text
     echo "Erro na execução do comando build - Diretório '$program_folder' não existe!"

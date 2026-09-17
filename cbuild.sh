@@ -37,7 +37,7 @@ run_with_timing()
     local runtime_ns=$(( (end - start) ))               #Armazena o runtime
     local runtime=$(get_runtime "$runtime_ns")          #Formata o runtime
 
-    ./cbuild_funcs/logs.sh "$log_label" "$exit_code" "$comando_user" "$runtime"
+    "$caminho_cbuild"/cbuild_funcs/logs.sh "$log_label" "$exit_code" "$comando_user" "$runtime"
 
     return "$exit_code"
 }
@@ -84,27 +84,29 @@ comando_executado="$1" # parâmetro colocado pelo usuário
 
 comando_user="$0 $*"
 
+caminho_cbuild="${0%/*}"
+
 case "$comando_executado" in
     "build" | "Build" | "b" | "B")
-        run_with_timing "Build" ./cbuild_funcs/build.sh "$2" "$3" 
+        run_with_timing "Build" "$caminho_cbuild"/cbuild_funcs/build.sh "$2" "$3" 
         ;;
     "clean" | "Clean" | "c" | "C" )
-        run_with_timing "Clean" ./cbuild_funcs/clean.sh "$2"
+        run_with_timing "Clean" "$caminho_cbuild"/cbuild_funcs/clean.sh "$2"
         ;; 
     "run" | "Run" | "r" | "R")
-        run_with_timing "Run" ./cbuild_funcs/run.sh
+        run_with_timing "Run" "$caminho_cbuild"/cbuild_funcs/run.sh
         ;;
     "rb" | "rebuild" | "Rebuild" | "ReBuild" | "RB")
-        run_with_timing "Rebuild" ./cbuild_funcs/rebuild.sh "$2" "$3"
+        run_with_timing "Rebuild" "$caminho_cbuild"/cbuild_funcs/rebuild.sh "$2" "$3"
         ;;
     "info" | "Info" | "i" | "I")
-        run_with_timing "Info" ./cbuild_funcs/info.sh "$2"
+        run_with_timing "Info" "$caminho_cbuild"/cbuild_funcs/info.sh "$2"
         ;;
     "verboso" | "Verboso" | "v" | "V" | "verbose" | "Verbose")
-        run_with_timing "Verboso" ./cbuild_modes/verbose.sh "$2"
+        run_with_timing "Verboso" "$caminho_cbuild"/cbuild_modes/verbose.sh "$2"
         ;;
     "debug" | "Debug" | "d" | "D")
-        run_with_timing "Debug" ./cbuild_modes/debug.sh "$2"
+        run_with_timing "Debug" "$caminho_cbuild"/cbuild_modes/debug.sh "$2"
         ;;
     "")
         ;;

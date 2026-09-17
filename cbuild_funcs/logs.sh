@@ -2,9 +2,11 @@
 
 # aqui jaz a função de criação de logs
 
-mkdir -p ./logs
+caminho_logs="${0%/*/*}"
 
-logdir=./logs
+mkdir -p "$caminho_logs"/logs
+
+logdir="$caminho_logs"/logs
 
 if [[ ! -r "$logdir" || ! -x "$logdir" || ! -w "$logdir" ]]; then # checa se tem permissão para o caso da pasta já existir anteriormente
   echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$logdir'." >> "$out_text"

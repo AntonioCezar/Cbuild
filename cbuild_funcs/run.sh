@@ -15,7 +15,7 @@ build_dir="./build"
 
 if [[ ! -d "$build_dir" ]]; then
   echo "A Pasta './build' Não Existe, O Programa Não Foi Compilado Anteriormente E Não Contém Executável." >> "$out_text"
-  echo "A pasta './build' não existe! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa"
+  echo "Pasta de arquivos de execução não encontrada! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa e criar a pasta"
   exit 1
 fi
 
@@ -56,7 +56,7 @@ if [[ -z "$run_file" ]]; then
 
   else
     echo "Arquivo de Execução Não Encontrado Na Pasta './build'!" >> $out_text
-    echo "Nenhum arquivo de execução encontrado!"
+    echo "Nenhum arquivo de execução encontrado! - Use './cbuild.sh build <dir> <output_name>' para compilar seu programa"
     exit 1
   fi
 
