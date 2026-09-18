@@ -12,6 +12,7 @@ case "$parametro" in
         ;;
     "F" | "false" | "f" | "False")
         echo "Modo Verboso Desativado" >> $out_text
+        echo "Modo Verboso Desativado"
         {
         echo "export verbose_mode=false"
         echo "export debug_mode=$debug_mode"
