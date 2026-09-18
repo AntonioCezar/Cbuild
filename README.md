@@ -1,8 +1,6 @@
-# Tec_Prog-EP-1
+# Cbuild
 Repositório que contém o software requisitado no primeiro projeto em equipe do curso regular do IME USP - MAC0216 oferecido para os alunos do Bacharelado em Ciência da Computação;
 
-
-CBuild
 
 O que é o CBuild e o que ele faz?
 
