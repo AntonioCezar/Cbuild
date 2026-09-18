@@ -14,15 +14,13 @@ Para isso, ele compila normalmente na primeira vez e, nas próximas execuções,
 
 Requisitos
 
-```
 - GCC
-```
 
 ---
 
 Comandos
 
-```bash
+```
 "./cbuild"
 ```
 
@@ -30,7 +28,7 @@ Apresenta o programa.
 
 "build" / "b"
 
-```bash
+```
 ./cbuild build <Diretório> [Nome do Executável]
 ```
 
@@ -40,7 +38,7 @@ O diretório é obrigatório, enquanto o nome do executável é opcional. Caso n
 
 "clean" / "c"
 
-```bash
+```
 ./cbuild clean
 ```
 
@@ -48,7 +46,7 @@ Limpa os artefatos da compilação.
 
 "clean all"
 
-```bash
+```
 ./cbuild clean all
 ```
 
@@ -56,7 +54,7 @@ Limpa os artefatos da compilação e todos os logs.
 
 "run" / "r"
 
-```bash
+```
 ./cbuild run
 ```
 
@@ -64,7 +62,7 @@ Executa seu programa ".c" a partir do arquivo compilado pelo comando "build".
 
 "rebuild" / "rb"
 
-```bash
+```
 ./cbuild rebuild <Diretório> [Nome do Executável]
 ```
 
@@ -74,7 +72,7 @@ Assim como no "build", o diretório é obrigatório e o nome do executável é o
 
 "info" / "i"
 
-```bash
+```
 ./cbuild info <Diretório>
 ```
 
@@ -84,13 +82,13 @@ O diretório é obrigatório.
 
 "verbose" / "v"
 
-```bash
+```
 ./cbuild verbose T
 ```
 
 ou
 
-```bash
+```
 ./cbuild verbose F
 ```
 
@@ -101,13 +99,13 @@ Ativa ou desativa o modo verboso.
 
 "debug" / "d"
 
-```bash
+```
 ./cbuild debug T
 ```
 
 ou
 
-```bash
+```
 ./cbuild debug F
 ```
 
@@ -124,7 +122,7 @@ Exemplos de uso
 
 Build
 
-```bash
+```
 ./cbuild build /home/programa programa
 ```
 
@@ -146,7 +144,7 @@ O executável já estará pronto para rodar o programa. Ele pode ser executado d
 
 Clean
 
-```bash
+```
 ./cbuild clean
 ```
 
@@ -156,7 +154,7 @@ Exclui todos os arquivos ".o" guardados na pasta "/build" e o executável que fo
 
 Clean All
 
-```bash
+```
 ./cbuild clean all
 ```
 
@@ -166,7 +164,7 @@ Além de excluir todos os arquivos ".o" e o executável guardados na pasta "/bui
 
 Run
 
-```bash
+```
 ./cbuild run
 ```
 
@@ -176,7 +174,7 @@ Executa o arquivo executável "main.o", pertencente à pasta "/build", que guard
 
 Rebuild
 
-```bash
+```
 ./cbuild rebuild /home/programa programa
 ```
 
@@ -194,7 +192,7 @@ Assim, já será possível rodar o programa diretamente pelo terminal ou atravé
 
 Info
 
-```bash
+```
 ./cbuild info /home/programa
 ```
 
@@ -210,7 +208,7 @@ Esse painel contém informações úteis sobre o estado de compilação do proje
 
 Verbose
 
-```bash
+```
 ./cbuild verbose T
 ```
 
@@ -222,7 +220,7 @@ Ao utilizar qualquer comando posteriormente, ele fornecerá informações úteis
 
 Debug
 
-```bash
+```
 ./cbuild debug T
 ```
 
