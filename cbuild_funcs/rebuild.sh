@@ -11,9 +11,9 @@ if [[ $verbose_mode == true ]]; then
   echo ""
 fi
 
-clean_command=$(find "./" -type f -iname "clean.sh" 2>/dev/null)
+clean_command=$(find "${0%/*}" -type f -iname "clean.sh" 2>/dev/null)
 
-build_command=$(find "./" -type f -iname "build.sh" 2>/dev/null)
+build_command=$(find "${0%/*}" -type f -iname "build.sh" 2>/dev/null)
 
 if [[ -z "$clean_command" ]]; then
   echo "Arquivo 'clean.sh' Não Encontrado Para a Execução do Comando 'Clean'." >> "$out_text"

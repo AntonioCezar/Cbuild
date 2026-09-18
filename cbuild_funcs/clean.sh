@@ -94,8 +94,8 @@ clean_mode="${1,,}"
 #cria arquivo temp de erro
 out_text=$(mktemp -p "$command_log_dir" 01_clean.XXXXXX)
 
-build_dir="./build"
-logs_dir="./logs"
+build_dir="$program_path/build"
+logs_dir="${program_path}/logs"
 
 if [[ $verbose_mode == true ]]; then 
     echo "Verboso: Programa inicou a limpeza dos arquivos temporários"

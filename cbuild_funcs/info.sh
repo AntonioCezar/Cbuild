@@ -3,7 +3,7 @@
 # aqui jaz a função info que mostra informações importantes sobre o cbuild e o programa do usuário
 
 out_text=$(mktemp -p "$command_log_dir" 04_info.XXXXXX)
-program_folder="$1" # aqui vai o diretório que o user vai passar ./cbuild b <dir>
+program_folder="$program_path" # aqui vai o diretório que o user vai passar ./cbuild b <dir>
 
 if [[ -z "$program_folder" ]]; then
     echo "Diretório '$program_folder' Que Foi Indicado Pelo Usuário Não Existe! (Argumento Vazio)" >> $out_text

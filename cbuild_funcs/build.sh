@@ -14,7 +14,7 @@ deep_compiler() {
     local arq_mod=0
     local file_detec=0
 
-    mkdir -p ./build/build_parts
+    mkdir -p $no_bar_p_folder/build/build_parts
 
     if [[ $verbose_mode == true ]]; then 
         echo "Verboso: Programa começou a compilar os arquivos"
@@ -31,17 +31,17 @@ deep_compiler() {
 
         local formated_file=$(basename "$file" .c) # formata o nome do arquivo para procurar o correspondente .o
 
-        if [[ "$file" -nt "./build/build_parts/${formated_file}.o" ]]; then # vê se o arquivo de compilação já existe e, se sim, se o arquivo .c é mais novo que o arquivo de compilação para só compilar o que foi modificado.
+        if [[ "$file" -nt "$no_bar_p_folder/build/build_parts/${formated_file}.o" ]]; then # vê se o arquivo de compilação já existe e, se sim, se o arquivo .c é mais novo que o arquivo de compilação para só compilar o que foi modificado.
 
             if [[ $debug_mode == true ]]; then 
                 echo "Debug: Programa concluiu que $file é mais novo que seu arquivo de compilação." 
             fi
 
-            gcc -c "$file" -o "./build/build_parts/${formated_file}.o" 2>> "$out_text" || return 2 # compila cada file em um arquivo.o, se der erro retorna 2
+            gcc -c "$file" -o "$no_bar_p_folder/build/build_parts/${formated_file}.o" 2>> "$out_text" || return 2 # compila cada file em um arquivo.o, se der erro retorna 2
             arq_mod=$((arq_mod + 1))
 
             if [[ $verbose_mode == true ]]; then 
-                echo "Verboso: Programa compilou $file com o comando 'gcc -c $file -o ./build/build_parts/${formated_file}.o'"
+                echo "Verboso: Programa compilou $file com o comando 'gcc -c $file -o $no_bar_p_folder/build/build_parts/${formated_file}.o'"
             fi
         else
             if [[ $debug_mode == true ]]; then 
@@ -56,7 +56,7 @@ deep_compiler() {
         return 4
     fi
 
-    if [[ $arq_mod -eq 0 && -f "./build/$out_name" ]]; then # detecta se não houve mudanças e se existe um arquivo de execução atual para o programa
+    if [[ $arq_mod -eq 0 && -f "$no_bar_p_folder/build/$out_name" ]]; then # detecta se não houve mudanças e se existe um arquivo de execução atual para o programa
         return 3
     fi
 
@@ -64,12 +64,12 @@ deep_compiler() {
         echo "Debug: Programa testou se existem arquivos .c e se houveram mudanças neles."
     fi
 
-    out_files=$(find "./build/build_parts" -type f -iname "*.o" | xargs -n 1 | tr '\n' ' ') # procura todos os arquivos .o que acabou de compilar no while
+    out_files=$(find "$no_bar_p_folder/build/build_parts" -type f -iname "*.o" | xargs -n 1 | tr '\n' ' ') # procura todos os arquivos .o que acabou de compilar no while
 
-    gcc $out_files -o "./build/$out_name" 2>> "$out_text" || return 2 # compila todos em um só output com o nome escolhido pelo usuário, se der erro retorna 2
+    gcc $out_files -o "$no_bar_p_folder/build/$out_name" 2>> "$out_text" || return 2 # compila todos em um só output com o nome escolhido pelo usuário, se der erro retorna 2
 
     if [[ $verbose_mode == true ]]; then 
-        echo "Verboso: Programa compilou $file com o comando 'gcc $out_files -o ./build/$out_name'"
+        echo "Verboso: Programa compilou $file com o comando 'gcc $out_files -o $no_bar_p_folder/build/$out_name'"
     fi
 
     if [[ $verbose_mode == true ]]; then 
@@ -85,6 +85,10 @@ deep_compiler() {
 
 program_folder="$1"; # aqui vai o diretório que o user vai passar ./cbuild b <dir>
 out_name="$2" # vai ser o nome que o user passar para o comando ./cbuild b <dir> <nome>
+
+no_bar_p_folder=${program_folder%/}
+
+echo "export program_path=$no_bar_p_folder" > "$interior_file"
 
 if ! command -v gcc >/dev/null 2>&1 ; then # checa se o gcc está instalado na root do sistema (se estiver não retorna nada, para isso que serve o dev/null)
     echo "GCC (GNU Compiler Collection) Não Instalado! Instale O Compilador Para Utilizar o Comando Build" >> "$out_text"

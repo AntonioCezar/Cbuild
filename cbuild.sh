@@ -30,6 +30,9 @@ run_with_timing()
     "$@"                                                #Executa o parâmetro que sobrou como se fosse um comando
 
     local exit_code=$?
+
+    source "$interior_file"
+    
     local end=$(date +%s%N)                             #Registra o fim da execução
 
     local runtime_ns=$(( (end - start) ))               #Armazena o runtime
@@ -40,7 +43,22 @@ run_with_timing()
     return "$exit_code"
 }
 
-export config_file="./cbuild_config"
+caminho_cbuild="${0%/*}"
+
+export config_file="$caminho_cbuild/cbuild_config"
+
+export interior_file="$caminho_cbuild/cbuild_interior"
+
+
+if [[ -f "$interior_file" ]]; then
+    source "$interior_file"
+else
+    {
+    echo 'export program_path=""'
+    } > "$interior_file"
+    source "$interior_file"
+fi
+
 
 if [[ -f "$config_file" ]]; then
     source "$config_file"
@@ -81,8 +99,6 @@ fi
 comando_executado="$1" # parâmetro colocado pelo usuário
 
 comando_user="$0 $*"
-
-caminho_cbuild="${0%/*}"
 
 case "$comando_executado" in
     "build" | "Build" | "b" | "B")

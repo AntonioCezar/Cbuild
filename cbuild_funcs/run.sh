@@ -11,7 +11,7 @@ if [[ $verbose_mode == true ]]; then
     echo ""
 fi
 
-build_dir="./build"
+build_dir="$program_path/build"
 
 if [[ ! -d "$build_dir" ]]; then
   echo "A Pasta './build' Não Existe, O Programa Não Foi Compilado Anteriormente E Não Contém Executável." >> "$out_text"
