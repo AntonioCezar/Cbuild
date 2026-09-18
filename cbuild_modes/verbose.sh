@@ -21,7 +21,7 @@ case "$parametro" in
         ;;
     "")
         echo "Nenhum Argumento Digitado No Comando" >> $out_text
-        echo "Digite ./cbuild verboso T para ativar o modo debug e ./cbuild verboso F para desativar" #verifica se $1 não existe
+        echo "Digite ./cbuild verboso T para ativar o modo verboso e ./cbuild verboso F para desativar" #verifica se $1 não existe
         exit 1
         ;;
     *)
