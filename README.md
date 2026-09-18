@@ -232,7 +232,9 @@ Logs
 
 Para acessar os logs do programa, basta abrir a pasta "logs" do CBuild:
 
+```
 cd logs/
+```
 
 Os logs são criados após a execução de um comando e armazenam informações sobre a execução, como:
 
@@ -257,11 +259,15 @@ Também é possível ativar manualmente os modos verboso e debug.
 
 Para ativá-los manualmente, basta alterar:
 
+```
 false
+```
 
 para:
 
+```
 true
+```
 
 Para desativá-los novamente, basta substituir "true" por "false".
 
