@@ -1,180 +1,232 @@
 # Tec_Prog-EP-1
 Repositório que contém o software requisitado no primeiro projeto em equipe do curso regular do IME USP - MAC0216 oferecido para os alunos do Bacharelado em Ciência da Computação;
 
-## 1. Instalar o Git
 
-Antes de clonar o repositorio, confira se o Git esta instalado:
+CBuild
 
-```bash
-git --version
-```
+O que é o CBuild e o que ele faz?
 
-Se aparecer uma versao, por exemplo `git version 2.x.x`, o Git ja esta
-instalado.
+O CBuild é uma ferramenta que facilita o processo de compilação de projetos em C.
 
-Se o comando nao funcionar, instale o Git pelo site oficial:
+Para isso, ele compila normalmente na primeira vez e, nas próximas execuções, detecta alterações e recompila apenas o que for necessário. Além disso, gerencia os artefatos e os logs de compilação.
 
-https://git-scm.com/downloads
+---
 
-## 2. Clonar o repositorio
+Requisitos
 
-Para baixar o projeto no seu computador use o comando cd para ir a pasta que deseja que o projeto seja salvo e execute:
+- GCC
 
-```bash
-git clone https://github.com/AntonioCezar/Tec_Prog-EP-1
-```
+---
 
-Depois entre na pasta do projeto:
+Comandos
 
-```bash
-cd Tec_Prog-EP-1
-```
+"./cbuild"
 
-## 3. Conferir a branch atual
+Apresenta o programa.
 
-Para ver em qual branch voce esta:
+"build" / "b"
 
-```bash
-git branch
-```
+./cbuild build <Diretório> [Nome do Executável]
 
-A branch atual aparece com um `*` antes do nome.
+Compila todas as mudanças detectadas no seu programa ".c".
 
-Voce tambem pode usar:
+O diretório é obrigatório, enquanto o nome do executável é opcional. Caso não seja informado, será utilizado um nome padrão.
 
-```bash
-git branch --show-current
-```
+"clean" / "c"
 
-Normalmente, a branch principal do projeto e a `main`.
+./cbuild clean
 
-## 4. Atualizar o projeto antes de trabalhar
+Limpa os artefatos da compilação.
 
-Antes de criar uma branch nova ou comecar uma alteracao, atualize sua copia local:
+"clean all"
 
-```bash
-git checkout main
-git pull origin main
-```
+./cbuild clean all
 
-O `git pull` baixa as alteracoes mais recentes do GitHub para o seu computador.
+Limpa os artefatos da compilação e todos os logs.
 
-## 5. Criar uma branch nova
+"run" / "r"
 
-Cada tarefa deve ser feita em uma branch propria para que o projeto nao fique uma bagunca e a gente consiga acompanhar as atualizacoes.
+./cbuild run
 
-Para criar e entrar em uma branch nova:
+Executa seu programa ".c" a partir do arquivo compilado pelo comando "build".
 
-```bash
-git checkout -b nome-da-sua-branch
-```
+"rebuild" / "rb"
 
-Exemplos de nomes:
+./cbuild rebuild <Diretório> [Nome do Executável]
 
-```bash
-git checkout -b adicionar-log
-git checkout -b corrigir-error-handling
-git checkout -b adicionar-funcao-x
-```
+Recompila seu programa, limpando todos os arquivos temporários e criando um novo arquivo de execução.
 
-Se nao souber o que vai fazer coloque um nome generico:
+Assim como no "build", o diretório é obrigatório e o nome do executável é opcional.
 
-```bash
-git checkout -b nome-qualquer
-```
+"info" / "i"
 
-E apos as modificacoes no arquivo mude o nome antes de enviar a branch para o Git:
+./cbuild info <Diretório>
 
-```bash
-git branch -m novo-nome
-```
+Exibe algumas informações importantes sobre o seu programa.
 
-Use nomes curtos, claros e relacionados ao que voce esta fazendo.
+O diretório é obrigatório.
 
-## 6. Adicionar arquivos ao commit
+"verbose" / "v"
 
-Depois que vc modificou ou adicionou novas coisas ao projeto, para adicionar todos os arquivos alterados:
+./cbuild verbose T
 
-```bash
-git add .
-```
+ou
 
-Se quiser adicionar apenas um arquivo especifico:
+./cbuild verbose F
 
-```bash
-git add caminho/do/arquivo
-```
+Ativa ou desativa o modo verboso.
 
-Exemplo:
+- "T" — ativa
+- "F" — desativa
 
-```bash
-git add compiler.sh
-```
+"debug" / "d"
 
-## 7. Criar um commit
+./cbuild debug T
 
-Depois de adicionar os arquivos, crie um commit com uma mensagem clara:
+ou
 
-```bash
-git commit -m "Adiciona instrucoes de uso do programa"
-```
+./cbuild debug F
 
-A mensagem deve explicar o que mudou. Prefira mensagens curtas e objetivas.
+Ativa ou desativa o modo debug.
 
-Bons exemplos:
+- "T" — ativa
+- "F" — desativa
 
-```bash
-git commit -m "Cria gitignore inicial do projeto"
-git commit -m "Corrige compilador C"
-git commit -m "Adiciona um log com timer"
-```
+«Obs.: Os modos verboso e debug não podem estar ativos ao mesmo tempo.»
 
-Evite mensagens genericas como:
+---
 
-```bash
-git commit -m "mudancas"
-git commit -m "ajustes"
-git commit -m "teste"
-```
+Exemplos de uso
 
-## 8. Enviar a branch para o GitHub
+Build
 
-Na primeira vez que voce enviar uma branch nova:
+./cbuild build /home/programa programa
 
-```bash
-git push -u origin nome-da-sua-branch
-```
+O CBuild encontra todos os arquivos ".c" na pasta "/home/programa" e os compila de forma incremental.
 
-Exemplo:
+Cada compilação individual é colocada na pasta:
 
-```bash
-git push -u origin adicionar-instrucoes
-```
+/build/build_parts
 
-Depois disso, enquanto estiver na mesma branch, voce pode usar apenas:
+Essa pasta estará localizada na pasta principal do programa.
 
-```bash
-git push
-```
+Após isso, o executável gerado, com o nome passado pelo usuário, será colocado na pasta:
 
-Caso tenha enviado uma branch com o nome errado, renomeie a branch localmente, reenvie a nova branch com o comando acima e, por fim, use:
+/build
 
-```bash
-git push origin --delete nome-antigo
-```
+O executável já estará pronto para rodar o programa. Ele pode ser executado diretamente pelo terminal ou através do comando "run", que fará a execução automaticamente.
 
-Para deletar a branch errada.
+---
 
-## 9. Abrir um Pull Request
+Clean
 
-Depois de enviar a branch para o GitHub, abra um Pull Request (Fica na propria pagina do Git).
+./cbuild clean
 
-No Pull Request, explique de forma simples:
+Exclui todos os arquivos ".o" guardados na pasta "/build" e o executável que foram gerados anteriormente pelos comandos "build" e "rebuild".
 
-- o que foi alterado;
-- por que a alteracao foi feita;
-- como testar, quando fizer sentido.
+---
 
-Confira se o codigo roda e se os arquivos alterados sao apenas os que fazem parte da tarefa.
+Clean All
 
-`Instrucoes retiradas e modificadas do repositorio do imejr`
+./cbuild clean all
+
+Além de excluir todos os arquivos ".o" e o executável guardados na pasta "/build", que foram gerados anteriormente pelos comandos "build" e "rebuild", também exclui os arquivos de logs localizados na pasta "/logs".
+
+---
+
+Run
+
+./cbuild run
+
+Executa o arquivo executável "main.o", pertencente à pasta "/build", que guarda os arquivos executáveis criados após o usuário utilizar os comandos "build" ou "rebuild".
+
+---
+
+Rebuild
+
+./cbuild rebuild /home/programa programa
+
+Exclui todos os executáveis guardados na pasta "/build", que foram gerados anteriormente pelos comandos "build" e "rebuild".
+
+Após isso, procura os arquivos ".c" no diretório fornecido e os compila de forma incremental, colocando cada compilação individual na pasta:
+
+/build/build_parts
+
+Após a compilação, o executável gerado será colocado na pasta "/build", utilizando o nome passado pelo usuário.
+
+Assim, já será possível rodar o programa diretamente pelo terminal ou através do comando "run", que irá executá-lo automaticamente.
+
+---
+
+Info
+
+./cbuild info /home/programa
+
+O programa fornece um painel de informações sobre o projeto em C contido no diretório fornecido.
+
+Esse painel contém informações úteis sobre o estado de compilação do projeto, mostrando:
+
+- Métricas do código;
+- Status de compilação;
+- Histórico de compilação.
+
+---
+
+Verbose
+
+./cbuild verbose T
+
+O programa ativa o modo verboso.
+
+Ao utilizar qualquer comando posteriormente, ele fornecerá informações úteis para entender como o programa funciona e o que ele está fazendo durante sua execução.
+
+---
+
+Debug
+
+./cbuild debug T
+
+O programa ativa o modo debug.
+
+Ao utilizar qualquer comando posteriormente, ele fornecerá informações sobre os códigos que o programa executou de forma mais técnica, com o objetivo adicional de auxiliar na identificação de falhas e bugs no programa.
+
+---
+
+Logs
+
+Para acessar os logs do programa, basta abrir a pasta "logs" do CBuild:
+
+cd logs/
+
+Os logs são criados após a execução de um comando e armazenam informações sobre a execução, como:
+
+- Comando executado;
+- Comando digitado pelo usuário;
+- Tempo de execução;
+- Resultado;
+- Mensagem de erro, caso ocorra;
+- Entre outras informações.
+
+---
+
+Configurações
+
+O programa conta com o arquivo:
+
+.cbuild_config
+
+Nesse arquivo, o usuário pode alterar o nome padrão do executável de compilação.
+
+Também é possível ativar manualmente os modos verboso e debug.
+
+Para ativá-los manualmente, basta alterar:
+
+false
+
+para:
+
+true
+
+Para desativá-los novamente, basta substituir "true" por "false".
+
+«Importante: Os modos verboso e debug não podem estar ativos ao mesmo tempo.»
