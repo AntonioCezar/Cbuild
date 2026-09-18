@@ -13,7 +13,7 @@ Para isso, ele compila normalmente na primeira vez e, nas próximas execuções,
 # Requisitos
 
 - GCC
-- Terminal interprete Bash scripts
+- Terminal que interprete Bash scripts
 
 ---
 
@@ -25,7 +25,6 @@ Para isso, ele compila normalmente na primeira vez e, nas próximas execuções,
 
 Apresenta a interface do programa listando os comandos disponíveis para o usuário.
 
-"build" / "b"
 
 ```
 ./cbuild build <Diretório> [Nome do Executável]
@@ -35,7 +34,6 @@ Compila todas as mudanças detectadas no seu programa ".c".
 
 O diretório é obrigatório, enquanto o nome do executável é opcional. Caso não seja informado, será utilizado um nome padrão.
 
-"clean" / "c"
 
 ```
 ./cbuild clean
@@ -43,7 +41,6 @@ O diretório é obrigatório, enquanto o nome do executável é opcional. Caso n
 
 Limpa os artefatos da compilação.
 
-"clean all"
 
 ```
 ./cbuild clean all
@@ -51,7 +48,6 @@ Limpa os artefatos da compilação.
 
 Limpa os artefatos da compilação e todos os logs.
 
-"run" / "r"
 
 ```
 ./cbuild run
@@ -59,7 +55,6 @@ Limpa os artefatos da compilação e todos os logs.
 
 Executa seu programa ".c" a partir do arquivo compilado pelo comando "build".
 
-"rebuild" / "rb"
 
 ```
 ./cbuild rebuild <Diretório> [Nome do Executável]
@@ -69,7 +64,6 @@ Recompila seu programa, limpando todos os arquivos temporários e criando um nov
 
 Assim como no "build", o diretório é obrigatório e o nome do executável é opcional.
 
-"info" / "i"
 
 ```
 ./cbuild info <Diretório>
@@ -79,7 +73,6 @@ Exibe algumas informações importantes sobre o seu programa.
 
 O diretório é obrigatório.
 
-"verbose" / "v"
 
 ```
 ./cbuild verbose T
@@ -96,7 +89,6 @@ Ativa ou desativa o modo verboso.
 - "T" — ativa
 - "F" — desativa
 
-"debug" / "d"
 
 ```
 ./cbuild debug T
@@ -114,6 +106,24 @@ Ativa ou desativa o modo debug.
 - "F" — desativa
 
 «Obs.: Os modos verboso e debug não podem estar ativos ao mesmo tempo.»
+
+### Os comandos também podem ser chamados a partir de suas siglas:
+
+- "build" / "b"
+
+- "run" / "r"
+
+- "clean" / "c"
+
+- "clean all" / "c all"
+
+- "rebuild" / "rb"
+
+- "info" / "i"
+
+- "verbose" / "v"
+
+- "debug" / "d"
 
 ---
 

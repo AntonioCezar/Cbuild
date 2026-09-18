@@ -8,17 +8,17 @@ clean() {
     #recebe o parâmetro diretório
     dir=$1
 
-    #verifico se tenho permissões para acessar o diretório
-    if [[ ! -r "$dir" || ! -x "$dir" || ! -w "$dir" ]]; then
-        echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$dir'." >> "$out_text"
-        echo "Erro: permissão negada ao acessar '$dir'."
-        return 1
-    fi
-
     #verifico se o diretório  existe
     if [[ ! -d "$dir" ]]; then
         echo "Diretório '$dir'  Não Existe." >> "$out_text"
         echo "Diretório '$dir' não existe."
+        return 1
+    fi
+
+    #verifico se tenho permissões para acessar o diretório
+    if [[ ! -r "$dir" || ! -x "$dir" || ! -w "$dir" ]]; then
+        echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$dir'." >> "$out_text"
+        echo "Erro: permissão negada ao acessar '$dir'."
         return 1
     fi
 
