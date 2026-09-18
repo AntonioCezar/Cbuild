@@ -2,27 +2,28 @@
 Repositório que contém o software requisitado no primeiro projeto em equipe do curso regular do IME USP - MAC0216 oferecido para os alunos do Bacharelado em Ciência da Computação;
 
 
-O que é o CBuild e o que ele faz?
+## O que é o Cbuild e o que ele faz?
 
-O CBuild é uma ferramenta que facilita o processo de compilação de projetos em C.
+O Cbuild é uma ferramenta que facilita o processo de compilação de projetos em C.
 
 Para isso, ele compila normalmente na primeira vez e, nas próximas execuções, detecta alterações e recompila apenas o que for necessário. Além disso, gerencia os artefatos e os logs de compilação.
 
 ---
 
-Requisitos
+# Requisitos
 
 - GCC
+- Terminal interprete Bash scripts
 
 ---
 
-Comandos
+# Comandos
 
 ```
 "./cbuild"
 ```
 
-Apresenta o programa.
+Apresenta a interface do programa listando os comandos disponíveis para o usuário.
 
 "build" / "b"
 
@@ -116,64 +117,68 @@ Ativa ou desativa o modo debug.
 
 ---
 
-Exemplos de uso
+# Exemplos de uso
 
-Build
+- Build
 
 ```
-./cbuild build /home/programa programa
+./cbuild b /home/programa programa
 ```
 
-O CBuild encontra todos os arquivos ".c" na pasta "/home/programa" e os compila de forma incremental.
+O Cbuild encontra todos os arquivos ".c" na pasta "/home/programa" e os compila de forma incremental.
 
 Cada compilação individual é colocada na pasta:
 
+```
 /build/build_parts
+```
 
-Essa pasta estará localizada na pasta principal do programa.
+Essa pasta estará localizada na pasta principal do programa junto com o arquivo principal cbuild.sh.
 
 Após isso, o executável gerado, com o nome passado pelo usuário, será colocado na pasta:
 
+```
 /build
+```
 
 O executável já estará pronto para rodar o programa. Ele pode ser executado diretamente pelo terminal ou através do comando "run", que fará a execução automaticamente.
 
 ---
 
-Clean
+- Clean
 
 ```
-./cbuild clean
+./cbuild c
 ```
 
 Exclui todos os arquivos ".o" guardados na pasta "/build" e o executável que foram gerados anteriormente pelos comandos "build" e "rebuild".
 
 ---
 
-Clean All
+- Clean All
 
 ```
-./cbuild clean all
+./cbuild c all
 ```
 
 Além de excluir todos os arquivos ".o" e o executável guardados na pasta "/build", que foram gerados anteriormente pelos comandos "build" e "rebuild", também exclui os arquivos de logs localizados na pasta "/logs".
 
 ---
 
-Run
+- Run
 
 ```
-./cbuild run
+./cbuild r
 ```
 
 Executa o arquivo executável "main.o", pertencente à pasta "/build", que guarda os arquivos executáveis criados após o usuário utilizar os comandos "build" ou "rebuild".
 
 ---
 
-Rebuild
+- Rebuild
 
 ```
-./cbuild rebuild /home/programa programa
+./cbuild rb /home/programa programa
 ```
 
 Exclui todos os executáveis guardados na pasta "/build", que foram gerados anteriormente pelos comandos "build" e "rebuild".
@@ -188,10 +193,10 @@ Assim, já será possível rodar o programa diretamente pelo terminal ou atravé
 
 ---
 
-Info
+- Info
 
 ```
-./cbuild info /home/programa
+./cbuild i /home/programa
 ```
 
 O programa fornece um painel de informações sobre o projeto em C contido no diretório fornecido.
@@ -204,10 +209,10 @@ Esse painel contém informações úteis sobre o estado de compilação do proje
 
 ---
 
-Verbose
+ - Verbose
 
 ```
-./cbuild verbose T
+./cbuild v T
 ```
 
 O programa ativa o modo verboso.
@@ -216,10 +221,10 @@ Ao utilizar qualquer comando posteriormente, ele fornecerá informações úteis
 
 ---
 
-Debug
+- Debug
 
 ```
-./cbuild debug T
+./cbuild d T
 ```
 
 O programa ativa o modo debug.
@@ -228,7 +233,7 @@ Ao utilizar qualquer comando posteriormente, ele fornecerá informações sobre 
 
 ---
 
-Logs
+# Logs
 
 Para acessar os logs do programa, basta abrir a pasta "logs" do CBuild:
 
@@ -247,11 +252,13 @@ Os logs são criados após a execução de um comando e armazenam informações 
 
 ---
 
-Configurações
+# Configurações
 
 O programa conta com o arquivo:
 
-.cbuild_config
+```
+cbuild_config
+```
 
 Nesse arquivo, o usuário pode alterar o nome padrão do executável de compilação.
 

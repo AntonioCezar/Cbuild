@@ -2,8 +2,6 @@
 
 # Aqui jaz o código principal para o funcionamento do programa.
 
-# ainda tem que adicionar uma procura profunda no cbuild, por enquanto ele assume que o usuário está na pasta que o cbuild está localizado, mas pode ser que não esteja, nesse caso devemos achar os comandos de forma recursiva.
-
 #Deixa o runtime mais legível
 get_runtime() 
 {
@@ -42,7 +40,7 @@ run_with_timing()
     return "$exit_code"
 }
 
-export config_file="./.cbuild_config"
+export config_file="./cbuild_config"
 
 if [[ -f "$config_file" ]]; then
     source "$config_file"

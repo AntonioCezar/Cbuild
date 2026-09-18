@@ -5,5 +5,5 @@ int mult(int a, int b){
 }
 
 char isEq(int a, int b){
-  if (a == b) return 'F'; else return 'T';
+  if (a == b) return 'T'; else return 'F';
 }
