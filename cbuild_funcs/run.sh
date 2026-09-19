@@ -27,7 +27,7 @@ fi
 if [[ ! -r "$build_dir" || ! -x "$build_dir" || ! -w "$build_dir" ]]; then
   echo "Sem Permissão Para Acessar o Conteúdo Da Pasta '$build_dir'." >> "$out_text"
   echo "Erro: permissão negada ao acessar '$build_dir'."
-  return 1
+  exit 1
 fi
 
 if [[ $debug_mode == true ]]; then 
@@ -35,14 +35,14 @@ if [[ $debug_mode == true ]]; then
 fi
 
 #Guarda o caminho do executável mais recente
-run_file=$(find "$build_dir" -maxdepth 1 -type f -executable -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
+run_file=$(find "$build_dir" -maxdepth 1 -type f -executable -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2- 2>/dev/null)
 
 if [[ -z "$run_file" ]]; then
 
   #verificando se existe um arquivo recente, mas sem permissão ou com formato inválido
   #apenas tirei o filtro -executable nessa segunda busca
 
-  likely_file=$(find "$build_dir" -maxdepth 1 -type f -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2-)
+  likely_file=$(find "$build_dir" -maxdepth 1 -type f -printf '%T+ %p\n' | sort -r | head -1 | cut -d' ' -f2- 2>/dev/null)
 
   if [[ -n "$likely_file" ]]; then
 

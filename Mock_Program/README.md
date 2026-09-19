@@ -1,0 +1,1 @@
+Programa simples em c que soma, subtrai, multiplica e divide dois numeros que sejam passados para ele. 

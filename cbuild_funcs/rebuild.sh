@@ -31,13 +31,13 @@ if [[ $debug_mode == true ]]; then
   echo "Debug: Programa verificou se os scripts clean.sh e build.sh existem." 
 fi
 
-./"$clean_command"
+"$clean_command"
 
 #saída 0 ou 1 da execução de clean
 exit_clean=$?
 
 if [[ $exit_clean -eq 0 ]]; then
-  ./"$build_command" "$1" "$2"
+  "$build_command" "$1" "$2"
   exit_build=$?
 
 else

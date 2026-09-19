@@ -75,16 +75,16 @@ if [[ $verbose_mode == true ]]; then
 fi
 
 # verifica se existe uma pasta build 
-if [[ ! -d "./build" ]]; then
+if [[ ! -d "$program_folder/build" ]]; then
     echo "Nenhum arquivo foi compilado"
 
 # verifica se a pasta build possui algum arquivo executável compilado
-elif [[ -z "$(find ./build -mindepth 1 -maxdepth 1 -type f -executable -print -quit)" ]]; then
+elif [[ -z "$(find $program_folder/build -mindepth 1 -maxdepth 1 -type f -executable -print -quit)" ]]; then
     echo "Não há arquivo executável compilado"
 
 else 
     # encontra o arquivo executavel na pasta build 
-    executavel=$(find ./build -maxdepth 1 -type f -executable | head -n 1)
+    executavel=$(find $program_folder/build -maxdepth 1 -type f -executable | head -n 1)
     tamanho_executavel=$(stat -c %s "$executavel")
     data_compilacao=$(date -r "$executavel" "+%d/%m/%Y às %H:%M:%S")
 
@@ -94,7 +94,7 @@ else
 fi
 
 if [[ $debug_mode == true ]]; then 
-    echo "Debug: Programa testou se a pasta ./build existe, se ela contém arquivos e se existe um arquivo executável."
+    echo "Debug: Programa testou se a pasta $program_folder/build existe, se ela contém arquivos e se existe um arquivo executável."
     echo ""
 fi
 
@@ -111,16 +111,16 @@ if [[ $verbose_mode == true ]]; then
 fi
 
 # verifica se a pasta logs existe no diretório
-if [[ ! -d "./logs" ]]; then 
+if [[ ! -d "$program_folder/logs" ]]; then 
     echo "Nenhum comando foi executado"
 
 # verifica se a pasta logs possui algum arquivo
-elif [[ -z "$(find ./logs -mindepth 1 -maxdepth 1 -print -quit)" ]]; then
+elif [[ -z "$(find $program_folder/logs -mindepth 1 -maxdepth 1 -print -quit)" ]]; then
     echo "Não há registro de comandos executados"
 
 else 
     # o arquivo log run mais recente que teve a operação bem-sucedida
-    log_run=$(grep -l -i "run" $(ls -t ./logs/* 2>/dev/null) | xargs -r grep -L "Operação Mal-Sucedida" | head -n 1)
+    log_run=$(grep -l -i "run" $(ls -t $program_folder/logs/* 2>/dev/null) | xargs -r grep -L "Operação Mal-Sucedida" | head -n 1)
 
     if [[ -z "$log_run" ]]; then
         echo "Não há registro de execução"

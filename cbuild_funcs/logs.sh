@@ -4,6 +4,10 @@
 
 caminho_logs="${program_path}"
 
+if [[ ! -d "$program_path" ]]; then
+    caminho_logs="./"
+fi
+
 mkdir -p "${caminho_logs}/logs"
 
 logdir="${caminho_logs}/logs"

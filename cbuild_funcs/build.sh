@@ -14,8 +14,6 @@ deep_compiler() {
     local arq_mod=0
     local file_detec=0
 
-    mkdir -p $no_bar_p_folder/build/build_parts
-
     if [[ $verbose_mode == true ]]; then 
         echo "Verboso: Programa começou a compilar os arquivos"
         echo ""
@@ -25,7 +23,7 @@ deep_compiler() {
 
     while IFS= read -r file; do # o IFS junto com o read -r deixam o texto passado para file da exata forma que ele foi passado para evitar erros
 
-        if [[ ! -z $file ]]; then # se existe um file .c adiciona no contador
+        if [[ ! -z "$file" ]]; then # se existe um file .c adiciona no contador
             file_detec=$((file_detec + 1))
         fi
 
@@ -36,6 +34,8 @@ deep_compiler() {
             if [[ $debug_mode == true ]]; then 
                 echo "Debug: Programa concluiu que $file é mais novo que seu arquivo de compilação." 
             fi
+
+            mkdir -p "$no_bar_p_folder/build/build_parts"
 
             gcc -c "$file" -o "$no_bar_p_folder/build/build_parts/${formated_file}.o" 2>> "$out_text" || return 2 # compila cada file em um arquivo.o, se der erro retorna 2
             arq_mod=$((arq_mod + 1))
@@ -86,10 +86,6 @@ deep_compiler() {
 program_folder="$1"; # aqui vai o diretório que o user vai passar ./cbuild b <dir>
 out_name="$2" # vai ser o nome que o user passar para o comando ./cbuild b <dir> <nome>
 
-no_bar_p_folder=${program_folder%/}
-
-echo "export program_path=$no_bar_p_folder" > "$interior_file"
-
 if ! command -v gcc >/dev/null 2>&1 ; then # checa se o gcc está instalado na root do sistema (se estiver não retorna nada, para isso que serve o dev/null)
     echo "GCC (GNU Compiler Collection) Não Instalado! Instale O Compilador Para Utilizar o Comando Build" >> "$out_text"
     echo "Erro na execução do comando build - gcc não instalado!"
@@ -126,6 +122,8 @@ if [[ $debug_mode == true ]]; then
     echo "Debug: Programa testou se tem permissão para acessar "$program_folder"."
 fi
 
+no_bar_p_folder="${program_folder%/}"
+
 if [[ -z $out_name ]]; then # checagem para ver se o user passou o nome do executável
     out_name="$default_name"
 
@@ -140,6 +138,9 @@ if [[ $debug_mode == true ]]; then
 fi
 
 if find "$program_folder" -type f -iname "*.c" | deep_compiler; then # procura todos os arquivos .c na pasta do projeto informada pelo usuário e executa o compilador avançado caso encontre arquivos
+
+    echo "export program_path=$no_bar_p_folder" > "$interior_file"
+    
     echo "O executável '$out_name' foi criado com sucesso!" >> $out_text # caso tudo funcione manda para o log o sucesso
     echo "Comando build executado com sucesso"
     exit 0
