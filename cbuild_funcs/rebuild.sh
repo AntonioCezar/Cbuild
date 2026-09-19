@@ -31,6 +31,12 @@ if [[ $debug_mode == true ]]; then
   echo "Debug: Programa verificou se os scripts clean.sh e build.sh existem." 
 fi
 
+if [[ -n "$1" ]]; then
+  formated_p_folder="${1%/}"
+  export program_path="$formated_p_folder"
+  echo "export program_path=$formated_p_folder" > "$interior_file"
+fi
+
 "$clean_command"
 
 #saída 0 ou 1 da execução de clean

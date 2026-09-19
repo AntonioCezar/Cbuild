@@ -47,8 +47,7 @@ caminho_cbuild="${0%/*}"
 
 export config_file="$caminho_cbuild/cbuild_config"
 
-export interior_file="$caminho_cbuild/cbuild_interior"
-
+export interior_file="$caminho_cbuild/.cbuild_interior"
 
 if [[ -f "$interior_file" ]]; then
     source "$interior_file"
